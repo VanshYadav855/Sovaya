@@ -1,31 +1,46 @@
-// Function to scroll the carousel (logos) left or right
-function scrollCarousel(direction) {
-    const carousel = document.getElementById('carousel');
-    const scrollAmount = 200; // Adjust this value to change how much it moves with each click
+// Smooth Scrolling for Navigation Links
+document.querySelectorAll('.menu a').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
 
-    if (direction === 'right') {
-        carousel.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    } else if (direction === 'left') {
-        carousel.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-    }
+        const targetId = this.getAttribute('href').substring(1);
+        const targetElement = document.getElementById(targetId);
+
+        window.scrollTo({
+            top: targetElement.offsetTop - 60, // Scroll position, adjust as needed
+            behavior: 'smooth'
+        });
+    });
+});
+
+// Carousel Functionality
+let carouselIndex = 0;
+const carouselImages = document.querySelectorAll('#carousel img');
+const totalImages = carouselImages.length;
+
+function showNextImage() {
+    carouselImages[carouselIndex].style.display = 'none'; // Hide the current image
+    carouselIndex = (carouselIndex + 1) % totalImages; // Move to the next image
+    carouselImages[carouselIndex].style.display = 'block'; // Show the next image
 }
 
-// Form validation and submission handler
-document.querySelector('.form-container form').addEventListener('submit', function (e) {
-    e.preventDefault(); // Prevents the default form submission
+// Initially display the first image
+carouselImages[carouselIndex].style.display = 'block';
 
-    // Get the form inputs
-    const name = document.querySelector('input[type="text"]').value;
-    const email = document.querySelector('input[type="email"]').value;
-    const phone = document.querySelector('input[type="tel"]').value;
-    const message = document.querySelector('textarea').value;
+// Change the image every 3 seconds (adjust the time as needed)
+setInterval(showNextImage, 3000);
 
-    // Simple form validation (can be extended as needed)
-    if (name && email && phone && message) {
-        alert('Form submitted successfully!');
-        // You can add code here to submit the form data to a server or email
-    } else {
-        alert('Please fill out all fields before submitting.');
+// Form Validation
+const form = document.querySelector('form');
+form.addEventListener('submit', function (event) {
+    const name = form.querySelector('input[type="text"]').value;
+    const email = form.querySelector('input[type="email"]').value;
+    const phone = form.querySelector('input[type="tel"]').value;
+    const message = form.querySelector('textarea').value;
+
+    if (!name || !email || !phone || !message) {
+        alert('Please fill in all the fields before submitting.');
+        event.preventDefault();
     }
 });
 
