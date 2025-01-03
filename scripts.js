@@ -28,7 +28,7 @@ function showNextImage() {
 carouselImages[carouselIndex].style.display = 'block';
 
 // Change the image every 3 seconds (adjust the time as needed)
-setInterval(showNextImage, 3000);
+//setInterval(showNextImage, 3000);
 
 // Form Validation
 const form = document.querySelector('form');
